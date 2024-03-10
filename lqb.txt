@@ -1,0 +1,71 @@
+蓝桥杯笔记
+-----------------------------------------------------------------------
+定义一个变量len求strlen或者 . size(),尽量不放入到for循环中减少时间复杂度
+-----------------------------------------------------------------------
+保证行内没有空格，例如数组1-5均有数字，但是6没有，如果输出arr[6]就会产生空格，
+可能造成误判
+    for(int i = 1;i <= 6;i++)
+    {
+        if(i != 6)
+        {
+            printf("%d",arr[i]);
+        }
+        else
+        {
+            printf("%d\n",arr[i]);
+        }
+    }
+-----------------------------------------------------------------------
+构造函数初始化结构体变量
+struct  Student{
+    string name;
+    int score;
+    Student(){}
+    Student(string n,int s):name(n),score(s){}
+}; 
+ int main()
+ {
+  Student stu[3];
+   for(int i = 0;i < 3;i++)
+   {
+    int s ;
+    string n;
+    cin>>s>>n;
+    stu[i] = Student(n,s);
+   }
+ }
+ ------------------------------------------------------------------
+ struct Student{
+    string name;
+};
+//对结构体变量进行排序 
+bool cmp2(Student x,Student y)
+{
+    return x.name > y.name;
+}
+--------------------------------------------------------------------
+多个变量比较
+struct S{
+    string name;
+    int score[4];
+};
+bool cmp(S x,S y)
+{
+    if(x.score[0] != y.score[0])
+    {
+        return x.score[0] > y.score[0];
+    }//不用写else，如果不相等就进入if然后return，如果相等进入下一个if
+    if(x.score[1] != y.score[1])
+    {
+        return x.score[1] > y.score[1];
+    }
+    if(x.score[2] != y.score[2])
+    {
+        return x.score[2] > y.score[2];
+    }
+    if(x.score[3] != y.score[3])
+    {
+        return x.score[3] > y.score[3];
+    }
+}
+-----------------------------------------------------------------------
