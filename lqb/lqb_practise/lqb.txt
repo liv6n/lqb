@@ -1,0 +1,305 @@
+蓝桥杯笔记
+------------------------------------------------------------------------
+基本模板
+#include<bits/stdc++.h>//万能头文件
+#define endl '\n'//用endl代替'\n'
+#define int long long //用longlong替代int,避免数据范围溢出
+using namespace std;
+//提交代码是会让选择对应c++标准,C11以上的标准 GNU G++11以上
+signed main()//main函数用signed代替int
+{
+    //写上这三行代码cin和cout的输出速度加快
+    ios::sync_with_stdio(0);//关流
+    cin.tie(0);
+    cout.tie(0);//输出不可以用endl换行 ,用'\n'
+    //不要用scanf和printf,会出bug,只能用cin和cout,不可以混用
+    //cout<<sizeof(int)<<endl;此时int 变成longlong
+    return 0;
+}
+-----------------------------------------------------------------------
+定义一个变量len求strlen或者 . size(),尽量不放入到for循环中减少时间复杂度
+-----------------------------------------------------------------------
+保证行内没有空格，例如数组1-5均有数字，但是6没有，如果输出arr[6]就会产生空格，
+可能造成误判
+    for(int i = 1;i <= 6;i++)
+    {
+        if(i != 6)
+        {
+            printf("%d",arr[i]);
+        }
+        else
+        {
+            printf("%d\n",arr[i]);
+        }
+    }
+-----------------------------------------------------------------------
+构造函数初始化结构体变量
+struct  Student{
+    string name;
+    int score;
+    Student(){}
+    Student(string n,int s):name(n),score(s){}
+}; 
+ int main()
+ {
+  Student stu[3];
+   for(int i = 0;i < 3;i++)
+   {
+    int s ;
+    string n;
+    cin>>s>>n;
+    stu[i] = Student(n,s);
+   }
+ }
+ ------------------------------------------------------------------
+ struct Student{
+    string name;
+};
+//对结构体变量进行排序 
+bool cmp2(Student x,Student y)
+{
+    return x.name > y.name;
+}
+--------------------------------------------------------------------
+多个变量比较
+struct S{
+    string name;
+    int score[4];
+};
+bool cmp(S x,S y)
+{
+    if(x.score[0] != y.score[0])
+    {
+        return x.score[0] > y.score[0];
+    }//不用写else，如果不相等就进入if然后return，如果相等进入下一个if
+    if(x.score[1] != y.score[1])
+    {
+        return x.score[1] > y.score[1];
+    }
+    if(x.score[2] != y.score[2])
+    {
+        return x.score[2] > y.score[2];
+    }
+    if(x.score[3] != y.score[3])
+    {
+        return x.score[3] > y.score[3];
+    }
+}
+-----------------------------------------------------------------------
+二分算法
+模板一（向左找，最小值）记为左加不补偿
+	while (l < r)
+    {
+        int mid = l + r >> 1;	//(l+r)/2
+        if (check(mid))  r = mid;    // check()判断mid是否满足性质
+        else l = mid + 1;
+    }
+模板二（向右找，最大值）记为右减且补偿
+	while (l < r)
+    {
+        int mid = l + r + 1 >> 1;	//(l+r+1)/2
+        if (check(mid))  l = mid;
+        else r = mid - 1;
+    }
+
+----------------------------------------------------------------------------
+bfd代码模板
+#include<iostream>
+#include<queue>
+#include<string.h>
+#define maxn 105
+using namespace std;
+ 
+int n,m;    //矩阵的大小 
+int sx,sy; //初始位置
+int vis[maxn][maxn],s[maxn][maxn],t[maxn][maxn];
+queue<struct node>Q; 
+int px[]={1,-1,0,0};        //人可走的4个方向 
+int py[]={0,0,1,-1};
+struct node{
+    int x,y,step;
+}r,p,q;
+ 
+int BFS()
+{   
+    //清空队列及初始化vis数组 
+    while(!Q.empty())
+        Q.pop();
+    memset(vis,0,sizeof(vis));//初始化函数
+    p.x=sx;
+    p.y=sy;
+    p.step=0;
+    vis[p.x][p.y]=1;
+    Q.push(p);
+    while(!Q.empty())
+    {
+        p=Q.front();
+        Q.pop();
+        if(s[p.x][p.y]=='t')
+            return p.step;
+        for(int i=0;i<4;i++)
+        {
+            q=p;
+            q.x+=px[i];
+            q.y+=py[i];
+            q.step++;
+            if(q.x<0||q.y<0||q.x>=n||q.y>=m)
+                continue;
+            //访问未被访问过的位置，且此时是在火势蔓延到此前访问的，再将该位置入队
+            if(vis[q.x][q.y]==0&&q.step<t[q.x][q.y])
+            {
+                vis[q.x][q.y]=1;
+                Q.push(q);
+            }
+        }
+    }
+    return -1;
+}
+ 
+int main(){
+ 
+    //功能需求代码 
+    //........
+ 
+    return 0;
+}
+
+typedef pair<int,int>PII;//pair 类型储存两个变量初始化默认为(0,0)
+queue<PII>q;
+//定义一种新类型，它是一种queue类型，且每个元素都是pair类型。
+也可以是
+typedef queue<pair<int,int> >q;//>和>之间的空格不可以省
+//通过first和second访问
+#include<bits/stdc++.h>
+using namespace std; 
+typedef pair<int,double>PII;
+int main()
+{
+	queue<PII>q;
+	q.push({0,1.2});
+	PII top = q.front();//PII类型的top
+	cout<<top.first<<endl;
+	cout<<top.second<<endl;
+	return 0;
+}
+-------------------------------------------------------------------------------
+//dfs模板
+bool check()
+{
+
+}
+void dfs()
+{
+    if(边界条件)//边界
+    {
+        return;
+    }
+    for(int i = 0;i <路径;i++)
+    {
+        if(check())
+        {
+            修改现场
+            dfs(下一种情况);
+            还原现场（回溯）;
+        }
+    }
+}
+#include<bits/stdc++.h>
+#define int long long 
+#define endl '\n'
+#define N 10101010
+using namespace std;
+int n;
+int a[N],book[N];
+void dfs(int step)
+{
+	if(step == n)
+	{
+		for(int i = 0;i < n;i++)
+		{
+			cout<<a[i];
+		}
+		cout<<endl;
+		return ;
+	}
+	for(int i = 1;i <= n ;i++)
+	{
+		if(book[i] == 0)
+		{
+		a[step] = i;
+		book[i] = 1;
+		dfs(step + 1);
+		book[i] = 0;
+		}
+	}
+	return ;
+}
+signed main()
+{
+	cin>>n;
+	dfs(0);
+	return 0;
+}
+------------------------------------------------------------------
+bfs模板
+#include<iostream>
+#include<queue>
+#include<string.h>
+#define maxn 105
+using namespace std;
+ 
+int n,m;    //矩阵的大小 
+int sx,sy; 
+int vis[maxn][maxn],s[maxn][maxn],t[maxn][maxn];
+queue<struct node>Q; 
+int px[]={1,-1,0,0};        //人可走的4个方向 
+int py[]={0,0,1,-1};
+struct node{
+    int x,y,step;
+}r,p,q;
+ 
+int BFS()
+{   
+    //清空队列及初始化vis数组 
+    while(!Q.empty())
+        Q.pop();
+    memset(vis,0,sizeof(vis));
+    p.x=sx;
+    p.y=sy;
+    p.step=0;
+    vis[p.x][p.y]=1;
+    Q.push(p);
+    while(!Q.empty())
+    {
+        p=Q.front();
+        Q.pop();
+        if(s[p.x][p.y]=='t')
+            return p.step;
+        for(int i=0;i<4;i++)
+        {
+            q=p;
+            q.x+=px[i];
+            q.y+=py[i];
+            q.step++;
+            if(q.x<0||q.y<0||q.x>=n||q.y>=m)
+                continue;
+            //访问未被访问过的位置，且此时是在火势蔓延到此前访问的，再将该位置入队
+            if(vis[q.x][q.y]==0&&q.step<t[q.x][q.y])
+            {
+                vis[q.x][q.y]=1;
+                Q.push(q);
+            }
+        }
+    }
+    return -1;
+}
+ 
+int main(){
+ 
+    //功能需求代码 
+    //........
+ 
+    return 0;
+}
+
+

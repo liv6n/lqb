@@ -1,0 +1,102 @@
+//dfs模板
+bool check()
+{
+
+}
+void dfs()
+{
+    if(边界条件)//边界
+    {
+        return;
+    }
+    for(int i = 0;i <路径;i++)
+    {
+        if(check())
+        {
+            修改现场
+            dfs(下一种情况);
+            还原现场（回溯）;
+        }
+    }
+}
+
+------------------------------------------------------------------
+bfs模板
+#include<iostream>
+#include<queue>
+#include<string.h>
+#define maxn 105
+using namespace std;
+ 
+int n,m;    //矩阵的大小 
+int sx,sy; 
+int vis[maxn][maxn],s[maxn][maxn],t[maxn][maxn];
+queue<struct node>Q; 
+int px[]={1,-1,0,0};        //人可走的4个方向 
+int py[]={0,0,1,-1};
+struct node{
+    int x,y,step;
+}r,p,q;
+ 
+int BFS()
+{   
+    //清空队列及初始化vis数组 
+    while(!Q.empty())
+        Q.pop();
+    memset(vis,0,sizeof(vis));
+    p.x=sx;
+    p.y=sy;
+    p.step=0;
+    vis[p.x][p.y]=1;
+    Q.push(p);
+    while(!Q.empty())
+    {
+        p=Q.front();
+        Q.pop();
+        if(s[p.x][p.y]=='t')
+            return p.step;
+        for(int i=0;i<4;i++)
+        {
+            q=p;
+            q.x+=px[i];
+            q.y+=py[i];
+            q.step++;
+            if(q.x<0||q.y<0||q.x>=n||q.y>=m)
+                continue;
+            //访问未被访问过的位置，且此时是在火势蔓延到此前访问的，再将该位置入队
+            if(vis[q.x][q.y]==0&&q.step<t[q.x][q.y])
+            {
+                vis[q.x][q.y]=1;
+                Q.push(q);
+            }
+        }
+    }
+    return -1;
+}
+ 
+int main(){
+ 
+    //功能需求代码 
+    //........
+ 
+    return 0;
+}
+
+while(l < r)
+{
+    int mid = l + r  >>1;
+    if(check(mid))
+    r = mid;
+    else
+    l = mid + 1； 
+}
+while(l < r)
+{
+    int mid = l + r + 1;
+    if(check(mid))
+    l = mid;
+    else
+    r = mid - 1;
+
+
+}
